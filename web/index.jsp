@@ -9,7 +9,7 @@
     <p><i>${message}</i></p>
 </c:if>
 
-<form action="emailList" method="post">
+<form action="${pageContext.request.contextPath}/emailList" method="post">
     <input type="hidden" name="action" value="add">        
     <label class="pad_top">Email:</label>
     <input type="email" name="email" value="${user.email}"><br>
