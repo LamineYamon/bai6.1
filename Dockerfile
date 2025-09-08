@@ -1,14 +1,13 @@
-# Sử dụng image Tomcat 9 + JDK 17
 FROM tomcat:9.0.108-jdk17
 
-# Xóa các app mặc định trong Tomcat (vd: ROOT, examples,…)
+# Xóa app mặc định
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Copy toàn bộ project của bạn vào ROOT (để chạy tại "/")
+# Copy JSP, HTML, CSS
 COPY ./web /usr/local/tomcat/webapps/ROOT
 
-# Mở port 8080 (Render sẽ dùng port này)
-EXPOSE 8080
+# Copy cấu hình + servlet đã biên dịch + thư viện
+COPY ./WEB-INF /usr/local/tomcat/webapps/ROOT/WEB-INF
 
-# Chạy Tomcat
+EXPOSE 8080
 CMD ["catalina.sh", "run"]
