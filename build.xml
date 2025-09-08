@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ch06_ex1_email" default="deploy" basedir=".">
+    <description>Builds and deploys project ch06_ex1_email</description>
+
+    <!-- Đường dẫn tới servlet-api.jar -->
+    <path id="servlet.classpath">
+        <pathelement location="D:/Code/Năm 3/ltw/apache-tomcat-9.0.108/lib/servlet-api.jar"/>
+    </path>
+
+    <!-- Xóa build cũ -->
+    <target name="clean">
+        <delete dir="build"/>
+        <delete dir="dist"/>
+    </target>
+
+    <!-- Biên dịch -->
+    <target name="compile">
+        <mkdir dir="build/WEB-INF/classes"/>
+        <javac srcdir="src/java"
+               destdir="build/WEB-INF/classes"
+               includeantruntime="false"
+               classpathref="servlet.classpath"/>
+    </target>
+
+    <!-- Đóng gói WAR -->
+    <target name="war" depends="compile">
+        <mkdir dir="dist"/>
+        <war destfile="dist/ch06_ex1_email.war" webxml="web/WEB-INF/web.xml">
+            <fileset dir="web"/>
+            <classes dir="build/WEB-INF/classes"/>
+        </war>
+    </target>
+
+    <!-- Deploy WAR vào Tomcat -->
+    <target name="deploy" depends="war">
+        <copy file="dist/ch06_ex1_email.war"
+              todir="D:/Code/Năm 3/ltw/apache-tomcat-9.0.108/webapps"/>
+        <echo message="Đã deploy ch06_ex1_email.war vào Tomcat webapps."/>
+    </target>
+</project>
